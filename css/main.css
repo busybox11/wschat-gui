@@ -31,3 +31,9 @@ body {
 .nav-icon {
     font-size: 3vh !important;
 }
+
+#nav-panel {
+    width: 15%;
+    background-color: #262626;
+    overflow-y: auto;
+}
