@@ -1,0 +1,33 @@
+@import url('/css/utilities.css');
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    background-color: #1A1A1A;
+    color: white;
+    margin: 0;
+}
+
+/*
+ * #appbar {
+ *    background-color: #2D2D2D;
+ *    padding: 1vh 2vh;
+ * }
+ */
+
+#nav {
+    background-color: #2D2D2D;
+    height: auto;
+    padding: 1.5vh;
+}
+
+.nav-icon-link {
+    margin-bottom: 1.5vh;
+}
+
+.nav-icon {
+    font-size: 3vh !important;
+}
