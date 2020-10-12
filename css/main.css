@@ -49,4 +49,10 @@ body {
     padding: .5vh .75vh;
     background-color: #2A2A2A;
     font-size: 1.25vh;
+    display: flex;
+}
+
+#nav-panel-bottom-bar-username {
+    width: 100%;
+    cursor: pointer;
 }
