@@ -26,10 +26,16 @@ body {
 
 .nav-icon-link {
     margin-bottom: 1.5vh;
+    cursor: pointer;
 }
 
 .nav-icon {
     font-size: 3vh !important;
+    color: #CCCCCC;
+}
+
+.nav-icon-active {
+    color: #FFFFFF;
 }
 
 #nav-panel {
