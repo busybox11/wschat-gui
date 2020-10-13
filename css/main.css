@@ -21,11 +21,11 @@ body {
 #nav {
     background-color: #2D2D2D;
     height: auto;
-    padding: 1.5vh;
+    padding: 1rem;
 }
 
 .nav-icon-link {
-    margin-bottom: 1.5vh;
+    margin-bottom: 1rem;
     cursor: pointer;
 }
 
@@ -61,13 +61,38 @@ body {
 }
 
 #nav-panel-bottom-bar {
-    padding: .5vh .75vh;
+    padding: .5rem .75rem;
     background-color: #2A2A2A;
-    font-size: 1.25vh;
+    font-size: 1rem;
     display: flex;
 }
 
 #nav-panel-bottom-bar-username {
     width: 100%;
     cursor: pointer;
+}
+
+#app-chat-header {
+    background: #212121;
+    padding: 8px 16px;
+}
+
+#app-chat-chatbox {
+    background: #212121;
+    padding: .5rem .75rem;
+}
+
+#chat-textbox {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    color: white;
+    font-size: 1rem;
+    padding: 0px;
+    width: 100%;
+}
+
+#app-chat-msg {
+    height: 100%;
+    margin-bottom: auto;
 }
