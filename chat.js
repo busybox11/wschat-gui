@@ -10,12 +10,13 @@ function connect(username) {
     let userConnected = [];
 
     ws.onopen = function() {
+        chatbox.disabled = true;
         ws.send(JSON.stringify({
             type: "newConnection",
             name: username,
             nameColor: nameColor
         }));
-    }
+    };
 
     ws.addEventListener("open", () => {
         console.log("Connected to server");
@@ -47,7 +48,7 @@ function connect(username) {
         };
 
         ws.onclose = function(event) {
-            console.log(event);
+            chatbox.disabled = true;
             chat.innerHTML += `<i>You've been disconnected</i>`;
             document.getElementById('app-chat-header-name').innerHTML = `Disconnected`;
         };
