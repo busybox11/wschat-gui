@@ -4,11 +4,24 @@ let chat = document.getElementById('app-chat-msg');
 let chatbox = document.getElementById('chat-textbox');
 let typing = document.getElementById('chat-typing-indicator');
 
+let typingUsers = [];
+
 function connect(username) {
     const ws = new WebSocket(`ws://${document.location.hostname}:9898/`);
     document.getElementById('app-chat-header-name').innerHTML = `<b>${new URL("ws://127.0.0.1:9898/").host}</b>`;
 
     let userConnected = [];
+
+    function updateTyping() {
+        // TODO: use switch
+        if (typingUsers.length == 0) {
+            typing.innerHTML = '<br>';
+        } else if (typingUsers.length == 1) {
+            typing.innerHTML = `<b>${typingUsers[0]}</b> is typing`;
+        } else {
+            typing.innerHTML = `<b>${typingUsers.join(', ')}</b> are typing`;
+        }
+    }
 
     ws.onopen = function() {
         chatbox.disabled = false;
@@ -24,6 +37,7 @@ function connect(username) {
 
         ws.onmessage = function(msg) {
             let json = JSON.parse(msg.data);
+            // TODO: use switch
             if (json.type == "newConnection") {
                 chat.innerHTML += `<i>${json.data} is connected.</i><br>`;
                 userConnected = json.onlineUser;
@@ -42,16 +56,16 @@ function connect(username) {
                     nameColor: nameColor
                 }))
             } else if (json.type == "typing") {
-                if (json.name != name) {
-                    if (json.data == true) {
-                        if (typing.innerText !== "" && !typing.innerHTML.includes(json.name)) {
-                            typing.innerHTML = typing.innerHTML.replace(' is typing', `, ${json.name} is typing`);
-                        } else if (typing.innerHTML == "") {
-                            typing.innerHTML += `${json.name} is typing`;
+                if (json.name != username) {
+                    if (json.data) {
+                        if (!typingUsers.includes(json.name)) {
+                            typingUsers.push(json.name);
+                            updateTyping()
                         }
                     } else {
-                        if (typing.innerHTML.includes(json.name)) {
-                            typing.innerHTML.replace(json.name, '');
+                        if (typingUsers.includes(json.name)) {
+                            typingUsers.pop(json.name);
+                            updateTyping()
                         }
                     }
                 }
