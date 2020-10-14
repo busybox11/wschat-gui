@@ -133,6 +133,11 @@ function connect(username) {
             type: "disconnecting",
             name: username
         }));
+        ws.send(JSON.stringify({
+            type: "typing",
+            data: false,
+            name: username
+        }));
         ws.close();
     }
 }
