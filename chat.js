@@ -45,7 +45,7 @@ function connect(username) {
                 chat.innerHTML += `<i>You're successfully connected as ${json.data}.</i><br>`;
                 userConnected = json.onlineUser;
             } else if (json.type == "nameInvalid") {
-                userConnected = json.userConnected;
+                userConnected = json.onlineUser;
     
                 while (userConnected.includes(username)) {
                     username = prompt("Username already taken, choose another one.").trim();
@@ -73,6 +73,7 @@ function connect(username) {
                 chat.innerHTML += `<div class="msg"><b style="color: ${json.nameColor}; height: fit-content">${json.name} </b><span>${json.data}</span><br></div>`;
             } else if (json.type == "disconnecting") {
                 chat.innerHTML += `<i>${json.name} is disconnected.</i><br>`;
+                userConnected = json.onlineUser;
             }
         };
 
