@@ -4,13 +4,15 @@ chatBtn = document.getElementById('nav-btn-panel-chat')
 serversBtn = document.getElementById('nav-btn-panel-servers')
 
 function askUsername() {
-    username = window.prompt('Enter a username', 'anon');
+    username = window.prompt('Enter a username', 'anon').trim();
 
     if (username == null || username == "") {
         askUsername()
     } else {
         usernameSpan.innerHTML = username
     }
+
+    connect(username);
 }
 
 function setPanelTab(tab) {
