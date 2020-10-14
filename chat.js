@@ -10,7 +10,7 @@ function connect(username) {
     let userConnected = [];
 
     ws.onopen = function() {
-        chatbox.disabled = true;
+        chatbox.disabled = false;
         ws.send(JSON.stringify({
             type: "newConnection",
             name: username,
