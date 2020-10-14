@@ -3,6 +3,7 @@ let nameColor = `hsla(${~~(360 * Math.random())},70%,70%,0.8)`;
 let chat = document.getElementById('app-chat-msg');
 let chatbox = document.getElementById('chat-textbox');
 let typing = document.getElementById('chat-typing-indicator');
+let connected_ul = document.getElementById('nav-chat-connected-list');
 
 let typingUsers = [];
 
@@ -20,6 +21,14 @@ function connect(username) {
             typing.innerHTML = `<b>${typingUsers[0]}</b> is typing`;
         } else {
             typing.innerHTML = `<b>${typingUsers.join(', ')}</b> are typing`;
+        }
+    }
+
+    function updateConnected() {
+        connected_ul.innerHTML = ""
+
+        for (let i in userConnected) {
+            connected_ul.innerHTML += `<li class="nav-chat-connected-user">${userConnected[i]}</li>`;
         }
     }
 
@@ -41,11 +50,14 @@ function connect(username) {
             if (json.type == "newConnection") {
                 chat.innerHTML += `<i>${json.data} is connected.</i><br>`;
                 userConnected = json.onlineUser;
+                updateConnected();
             } else if (json.type == "connected") {
                 chat.innerHTML += `<i>You're successfully connected as ${json.data}.</i><br>`;
                 userConnected = json.onlineUser;
+                updateConnected();
             } else if (json.type == "nameInvalid") {
                 userConnected = json.onlineUser;
+                updateConnected();
     
                 while (userConnected.includes(username)) {
                     username = prompt('Username already taken, choose another one.', 'anon').trim();
@@ -64,7 +76,7 @@ function connect(username) {
                         }
                     } else {
                         if (typingUsers.includes(json.name)) {
-                            typingUsers.pop(json.name);
+                            typingUsers.splice(typingUsers.indexOf(json.name), 1);
                             updateTyping()
                         }
                     }
@@ -74,6 +86,7 @@ function connect(username) {
             } else if (json.type == "disconnecting") {
                 chat.innerHTML += `<i>${json.name} is disconnected.</i><br>`;
                 userConnected = json.onlineUser;
+                updateConnected();
             }
         };
 
