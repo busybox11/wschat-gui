@@ -1,6 +1,7 @@
 let nameColor = "hsl(" + Math.random() * 360 + ", 100%, 75%)";
 
 let chat = document.getElementById('app-chat-msg');
+let chatbox = document.getElementById('chat-textbox');
 
 function connect(username) {
     const ws = new WebSocket(`ws://${document.location.hostname}:9898/`);
@@ -45,4 +46,28 @@ function connect(username) {
             }
         };
     })
+
+    chatbox.addEventListener('keyup', function(event) {
+        if (event.key == "Enter") {
+            if (chatbox.value !== "") {
+                ws.send(JSON.stringify({
+                    type: "message",
+                    name: username,
+                    msg: chatbox.value,
+                    nameColor: nameColor
+                }));
+                chatbox.value = "";
+            };
+        }
+        if (chatbox.value !== "" && chatbox.value != null) {
+            isTyping = true;
+        } else {
+            isTyping = false;
+        }
+        ws.send(JSON.stringify({
+            type: "typing",
+            data: isTyping,
+            name: username
+        }));
+    });
 }

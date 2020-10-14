@@ -18,6 +18,12 @@ body {
  * }
  */
 
+
+#app-side {
+    display: flex;
+    min-width: 20%;
+}
+
 #nav {
     background-color: #2D2D2D;
     height: auto;
@@ -48,7 +54,7 @@ body {
 }
 
 #nav-panel {
-    width: 15%;
+    width: 100%;
     height: auto;
     background-color: #262626;
     display: flex;
@@ -70,6 +76,10 @@ body {
 #nav-panel-bottom-bar-username {
     width: 100%;
     cursor: pointer;
+}
+
+#app-content {
+    width: 80%;
 }
 
 #app-chat-header {
@@ -108,4 +118,11 @@ body {
 #app-chat-msg {
     height: 100%;
     padding: 1rem;
+    overflow: auto;
+    overflow-wrap: break-word;
+}
+
+.msg > span {
+    overflow: auto;
+    overflow-wrap: break-word;
 }
