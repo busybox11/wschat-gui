@@ -5,6 +5,8 @@ let chat = document.getElementById('app-chat-msg');
 function connect(username) {
     const ws = new WebSocket(`ws://${document.location.hostname}:9898/`);
 
+    let userConnected = [];
+
     ws.onopen = function() {
         ws.send(JSON.stringify({
             type: "newConnection",
@@ -15,6 +17,32 @@ function connect(username) {
 
     ws.addEventListener("open", () => {
         console.log("Connected to server");
-        chat.innerHTML = chat.innerHTML +  `<i>Connected as ${username}</i><br>`
+
+        ws.onmessage = function(msg) {
+            let json = JSON.parse(msg.data);
+            if (json.type == "newConnection") {
+                chat.innerHTML += `<i>${json.data} is connected.</i><br>`;
+                userConnected = json.onlineUser;
+            } else if (json.type == "connected") {
+                chat.innerHTML += `<i>You're successfully connected as ${json.data}.</i><br>`;
+                userConnected = json.onlineUser;
+            } else if (json.type == "nameInvalid") {
+    
+                userConnected = json.userConnected;
+    
+                while (userConnected.includes(username)) {
+                    username = prompt("Username already taken, choose another one.").trim();
+                }
+                ws.send(JSON.stringify({
+                    type: "newConnection",
+                    name: username,
+                    nameColor: nameColor
+                }))
+            } else if (json.type == "message") {
+                chat.innerHTML += `<div class="msg"><b style="color: ${json.nameColor}; height: fit-content">${json.name} </b><span>${json.data}</span><br></div>`;
+            } else if (json.type == "LostAClient") {
+                userConnected = json.data;
+            }
+        };
     })
 }
