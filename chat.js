@@ -4,6 +4,7 @@ let chat = document.getElementById('app-chat-msg');
 
 function connect(username) {
     const ws = new WebSocket(`ws://${document.location.hostname}:9898/`);
+    document.getElementById('app-chat-header-name').innerHTML = `<b>${new URL("ws://127.0.0.1:9898/").host}</b>`;
 
     let userConnected = [];
 
@@ -27,7 +28,6 @@ function connect(username) {
                 chat.innerHTML += `<i>You're successfully connected as ${json.data}.</i><br>`;
                 userConnected = json.onlineUser;
             } else if (json.type == "nameInvalid") {
-    
                 userConnected = json.userConnected;
     
                 while (userConnected.includes(username)) {
