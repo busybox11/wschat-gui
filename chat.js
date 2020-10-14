@@ -1,4 +1,4 @@
-let nameColor = "hsl(" + Math.random() * 360 + ", 100%, 75%)";
+let nameColor = `hsla(${~~(360 * Math.random())},70%,70%,0.8)`;
 
 let chat = document.getElementById('app-chat-msg');
 let chatbox = document.getElementById('chat-textbox');
@@ -41,9 +41,15 @@ function connect(username) {
                 }))
             } else if (json.type == "message") {
                 chat.innerHTML += `<div class="msg"><b style="color: ${json.nameColor}; height: fit-content">${json.name} </b><span>${json.data}</span><br></div>`;
-            } else if (json.type == "LostAClient") {
-                userConnected = json.data;
+            } else if (json.type == "disconnecting") {
+                chat.innerHTML += `<i>${json.name} is disconnected.</i>`;
             }
+        };
+
+        ws.onclose = function(event) {
+            console.log(event);
+            chat.innerHTML += `<i>You've been disconnected</i>`;
+            document.getElementById('app-chat-header-name').innerHTML = `Disconnected`;
         };
     })
 
@@ -70,4 +76,12 @@ function connect(username) {
             name: username
         }));
     });
+
+    window.onbeforeunload = function(){
+        ws.send(JSON.stringify({
+            type: "disconnecting",
+            name: username
+        }));
+        ws.close();
+    }
 }
