@@ -115,6 +115,10 @@ body {
     outline: 0;
 }
 
+#chat-typing-indicator {
+    margin: .5rem 1rem;
+}
+
 #chat-textbox-indicator {
     margin-right: .75rem;
 }

@@ -2,6 +2,7 @@ let nameColor = `hsla(${~~(360 * Math.random())},70%,70%,0.8)`;
 
 let chat = document.getElementById('app-chat-msg');
 let chatbox = document.getElementById('chat-textbox');
+let typing = document.getElementById('chat-typing-indicator');
 
 function connect(username) {
     const ws = new WebSocket(`ws://${document.location.hostname}:9898/`);
@@ -40,16 +41,30 @@ function connect(username) {
                     name: username,
                     nameColor: nameColor
                 }))
+            } else if (json.type == "typing") {
+                if (json.name != name) {
+                    if (json.data == true) {
+                        if (typing.innerText !== "" && !typing.innerHTML.includes(json.name)) {
+                            typing.innerHTML = typing.innerHTML.replace(' is typing', `, ${json.name} is typing`);
+                        } else if (typing.innerHTML == "") {
+                            typing.innerHTML += `${json.name} is typing`;
+                        }
+                    } else {
+                        if (typing.innerHTML.includes(json.name)) {
+                            typing.innerHTML.replace(json.name, '');
+                        }
+                    }
+                }
             } else if (json.type == "message") {
                 chat.innerHTML += `<div class="msg"><b style="color: ${json.nameColor}; height: fit-content">${json.name} </b><span>${json.data}</span><br></div>`;
             } else if (json.type == "disconnecting") {
-                chat.innerHTML += `<i>${json.name} is disconnected.</i>`;
+                chat.innerHTML += `<i>${json.name} is disconnected.</i><br>`;
             }
         };
 
         ws.onclose = function(event) {
             chatbox.disabled = true;
-            chat.innerHTML += `<i>You've been disconnected</i>`;
+            chat.innerHTML += `<i>You've been disconnected</i><br>`;
             document.getElementById('app-chat-header-name').innerHTML = `Disconnected`;
         };
     })
