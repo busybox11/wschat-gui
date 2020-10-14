@@ -32,7 +32,7 @@ body {
 .nav-icon {
     font-size: 3vh !important;
     color: #AAAAAA;
-    transition: all .5s;
+    transition: all .25s;
 }
 
 .nav-icon:hover {
