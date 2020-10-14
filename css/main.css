@@ -74,7 +74,7 @@ body {
 
 #app-chat-header {
     background: #212121;
-    padding: 8px 16px;
+    padding: .75rem 1rem;
 }
 
 #app-chat-chatbox {
@@ -107,5 +107,5 @@ body {
 
 #app-chat-msg {
     height: 100%;
-    margin-bottom: auto;
+    padding: 1rem;
 }
