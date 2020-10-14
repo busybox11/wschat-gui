@@ -48,7 +48,7 @@ function connect(username) {
                 userConnected = json.onlineUser;
     
                 while (userConnected.includes(username)) {
-                    username = prompt("Username already taken, choose another one.").trim();
+                    username = prompt('Username already taken, choose another one.', 'anon').trim();
                 }
                 ws.send(JSON.stringify({
                     type: "newConnection",
