@@ -7,6 +7,11 @@ let connected_ul = document.getElementById('nav-chat-connected-list');
 
 let typingUsers = [];
 
+function chatMention(user) {
+    chatbox.value += `@${user} `;
+    chatbox.focus();
+}
+
 function connect(username) {
     const ws = new WebSocket(`ws://${document.location.hostname}:9898/`);
     document.getElementById('app-chat-header-name').innerHTML = `<b>${new URL("ws://127.0.0.1:9898/").host}</b>`;
@@ -28,7 +33,7 @@ function connect(username) {
         connected_ul.innerHTML = ""
 
         for (let i in userConnected) {
-            connected_ul.innerHTML += `<li class="nav-chat-connected-user">${userConnected[i]}</li>`;
+            connected_ul.innerHTML += `<li class="nav-chat-connected-user" onclick="chatMention('${userConnected[i]}')">${userConnected[i]}</li>`;
         }
     }
 
@@ -91,6 +96,8 @@ function connect(username) {
         };
 
         ws.onclose = function(event) {
+            userConnected = [];
+            updateConnected();
             chatbox.disabled = true;
             chat.innerHTML += `<i>You've been disconnected</i><br>`;
             document.getElementById('app-chat-header-name').innerHTML = `Disconnected`;

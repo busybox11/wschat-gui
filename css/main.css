@@ -73,6 +73,7 @@ body {
 .nav-chat-connected-user {
     display: block;
     margin-bottom: .5rem;
+    cursor: pointer;
 }
 
 #nav-panel-bottom-bar {
