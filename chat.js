@@ -19,14 +19,18 @@ function connect(username) {
     let userConnected = [];
 
     function updateTyping() {
-        // TODO: use switch
-        if (typingUsers.length == 0) {
-            typing.innerHTML = '<br>';
-        } else if (typingUsers.length == 1) {
-            typing.innerHTML = `<b>${typingUsers[0]}</b> is typing`;
-        } else {
-            typing.innerHTML = `<b>${typingUsers.join(', ')}</b> are typing`;
-        }
+        
+        switch (typingUsers.length) {
+           case 0:
+                typing.innerHTML = '<br>';
+                break;
+           case 1:
+                typing.innerHTML = `<b>${typingUsers[0]}</b> is typing`;
+                break;
+           default:
+                typing.innerHTML = `<b>${typingUsers.join(', ')}</b> are typing`;
+}
+        
     }
 
     function updateConnected() {
